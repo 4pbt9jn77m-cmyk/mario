@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#16345a">
+<title>Faktor Sepunya: Lompat &amp; Kutip</title>
+<style>
+:root{--navy:#16345a;--gold:#ffd43b;--cream:#fff7d9;--brown:#74421d;--green:#16a34a;--ink:#17304e;--red:#c62828}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(#5ccafa,#d8f7ff);color:var(--ink)}button{font:inherit;touch-action:manipulation}.wrap{max-width:1120px;margin:auto;padding:12px}.header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:var(--navy);color:#fff;border:4px solid #0d2340;border-radius:18px;padding:12px 16px;box-shadow:0 5px #09192d}h1{margin:0;color:#ffdc47;font-size:clamp(22px,4vw,36px);text-shadow:2px 3px #a65313}.subtitle{font-size:13px;color:#d7efff;margin-top:3px}.stats{display:flex;gap:7px;flex-wrap:wrap}.pill{background:#fff2c5;color:#172e4d;padding:8px 10px;border-radius:11px;font-weight:900;border:2px solid #e7b737;font-size:14px}.level-ribbon{display:block;text-align:center;font-weight:1000;font-size:12px;letter-spacing:.09em;padding:8px 12px;border-radius:999px;background:#183759;color:#ffdf63;margin:13px auto -4px;max-width:max-content;border:2px solid rgba(255,255,255,.7);box-shadow:0 3px 0 rgba(20,36,65,.2)}.quest{background:var(--cream);border:3px solid #aa6b2e;border-radius:15px;padding:12px;margin:13px 0;text-align:center;font-weight:850;font-size:clamp(16px,2.5vw,22px);box-shadow:0 4px #74421d}.quest small{display:block;font-size:13px;font-weight:650;color:#536276;margin-top:5px;line-height:1.45}.factor-panel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:10px 0}.factor-card{background:#fff;border:3px solid #7db7d5;border-radius:13px;padding:10px 12px;box-shadow:0 3px #477d9b}.factor-card strong{display:block;color:#17304e;font-size:14px;margin-bottom:5px}.factor-card span{display:block;color:#28445f;font-weight:750;line-height:1.45;overflow-wrap:anywhere}.all-same{text-align:center;margin:8px 0 10px}.all-same span{display:inline-block;padding:7px 12px;background:#16843b;border:2px solid #d9ffd9;border-radius:9px;color:#fff;font-weight:900;font-size:13px}.gamebox{border:5px solid var(--brown);border-radius:18px;overflow:hidden;box-shadow:0 6px #422b19;background:#78d9ff}canvas{display:block;width:100%;height:auto;image-rendering:auto;touch-action:none;filter:saturate(1.04)}.controls{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin:13px 0}.group{display:flex;gap:8px;flex-wrap:wrap}.btn{border:0;border-radius:12px;padding:11px 15px;background:linear-gradient(#ffe36a,#ffbd26);color:#3c2a06;font-weight:950;box-shadow:0 4px #a55e12;cursor:pointer;font-size:15px;min-height:44px}.btn:active:not(:disabled){transform:translateY(3px);box-shadow:0 1px #a55e12}.btn.dark{background:linear-gradient(#284b73,#16345a);color:white;box-shadow:0 4px #0b2039}.btn.alt{background:linear-gradient(#e8f5ff,#b9e4fa);color:#17304e;box-shadow:0 4px #6c9cba}.btn:disabled{opacity:.42;filter:grayscale(.7);cursor:not-allowed;transform:none}.scoreboard{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:12px 0}.score-card{background:#fff7d9;border:2px solid #d9ad43;border-radius:13px;padding:10px;text-align:center;box-shadow:0 3px #aa6b2e}.score-card .label{display:block;font-size:12px;font-weight:850;color:#52647a}.score-card .value{display:block;font-size:22px;font-weight:1000;margin-top:2px}.hint{background:#fff;border:2px solid #c6e8f5;border-radius:14px;padding:12px;line-height:1.55;margin-bottom:12px}.hint ul{margin:7px 0 0;padding-left:20px}.feedback{min-height:28px;font-weight:850;text-align:center;margin:9px 0}.modal{position:fixed;inset:0;background:rgba(8,25,43,.78);display:none;place-items:center;z-index:20;padding:18px;overflow-y:auto}.modal.show{display:grid}.modal-card{width:min(760px,95vw);background:var(--cream);border:5px solid var(--brown);border-radius:26px;box-shadow:0 9px #422b19;padding:clamp(20px,4vw,36px);text-align:center}.modal-card h2{margin:0 0 10px;font-size:clamp(32px,7vw,64px);line-height:1.08;color:var(--red)}.modal-card p{font-weight:850;font-size:clamp(16px,3vw,22px);line-height:1.35;margin:10px 0 16px}.victory-card h2{color:#16843b}.modal-stats{font-size:14px!important;font-weight:750!important;color:#52647a;margin:0 0 18px!important}.modal-card .btn{min-width:195px;font-size:18px;padding:13px 20px}.tiny{font-size:12px;color:#4d6175}.control-note{font-size:13px;color:#2f506d;text-align:center;margin:-3px 0 12px}
+.boss-card{border-color:#39225f;background:linear-gradient(#fff8dc,#fff0c4);box-shadow:0 9px #24153e}
+.boss-card h2{color:#673ab7;text-shadow:2px 3px #e5d5ff;margin-bottom:8px}
+.boss-kicker{display:inline-block;background:#39225f;color:#fff;padding:6px 12px;border-radius:999px;font-weight:950;font-size:12px;letter-spacing:.08em;margin-bottom:10px}
+.boss-health-wrap{display:flex;align-items:center;justify-content:center;gap:12px;background:#f0e8ff;border:2px solid #b7a0e8;border-radius:12px;padding:10px;margin:12px auto;max-width:360px}
+.boss-health-label{font-size:12px;font-weight:950;color:#50347f}.boss-health-wrap strong{font-size:22px;letter-spacing:2px}
+.boss-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-width:470px;margin:16px auto}
+.boss-options .btn{min-width:0;width:100%;font-size:22px;padding:14px;background:linear-gradient(#eef7ff,#c3e5fa);color:#17304e;box-shadow:0 4px #6c9cba}
+.boss-feedback{font-size:15px!important;color:#3c4f65;min-height:42px}
+.combo-pill{background:#e7dcff;color:#3d2376;border-color:#ac8ee9}.book-content{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;text-align:left;max-height:52vh;overflow:auto;margin:16px 0;padding:2px}.book-page{background:#fff;border:2px solid #c4d5eb;border-radius:12px;padding:12px}.book-page h3{margin:0 0 7px;color:#234a72;font-size:15px}.book-page p{font-size:13px!important;font-weight:650!important;margin:5px 0;line-height:1.4}.book-page .answer{color:#16843b}.portal-card{border-color:#297ca0;background:linear-gradient(#f0fcff,#fff7d9);box-shadow:0 9px #17455e}.portal-card h2{color:#087b9b;text-shadow:2px 3px #c5f4ff}.portal-kicker{display:inline-block;background:#075b79;color:#fff;padding:6px 12px;border-radius:999px;font-weight:950;font-size:12px;letter-spacing:.08em;margin-bottom:10px}.portal-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-width:470px;margin:16px auto}.portal-options .btn{min-width:0;width:100%;font-size:22px;padding:14px;background:linear-gradient(#eef7ff,#c3e5fa);color:#17304e;box-shadow:0 4px #6c9cba}.portal-feedback{font-size:15px!important;color:#3c4f65;min-height:42px}.combo-note{font-size:12px;color:#513d76;text-align:center;margin-top:-5px;margin-bottom:10px}
+@media(max-width:520px){.boss-options{gap:8px}.boss-options .btn{font-size:19px;padding:12px}.portal-options{gap:8px}.portal-options .btn{font-size:19px;padding:12px}.book-content{grid-template-columns:1fr;max-height:58vh}}
+
+@media(max-width:720px){.wrap{padding:8px}.header{padding:11px}.stats{width:100%;gap:6px}.pill{font-size:12px;padding:7px 8px}.scoreboard{grid-template-columns:repeat(2,minmax(0,1fr))}.factor-panel{grid-template-columns:1fr;gap:7px}.factor-card{padding:9px}.controls{display:grid;grid-template-columns:1fr;align-items:stretch;gap:9px}.controls .group{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;flex:none;gap:7px}.controls .group .btn{flex:initial;min-width:0;min-height:48px;padding:10px 7px;font-size:13px}.btn{padding:10px 11px;font-size:14px}.modal-card{border-radius:20px}.subtitle{font-size:12px}}
+@media(max-width:390px){.group{gap:6px}.btn{font-size:12px;padding:9px 8px}.pill{font-size:11px}}
+
+/* Menu ringkas: arahan, muzik, buku faktor dan statistik disimpan di menu atas kanan. */
+.header{display:block}
+.header-main{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.header-main>div:first-child{min-width:0}
+.menu-toggle{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 14px;border:2px solid #83d9f4;background:linear-gradient(#257da7,#13506f);color:#fff;border-radius:13px;box-shadow:0 4px #0a2c42;font-weight:950;min-height:44px;cursor:pointer}
+.menu-toggle:active{transform:translateY(2px);box-shadow:0 2px #0a2c42}
+.header .stats{justify-content:flex-start}
+.bonus-pill{background:#ffe4ef;color:#85294a;border-color:#f19bbb}
+.game-actions{justify-content:center}
+.control-note,.combo-note{display:none}
+/* Keep the game itself dominant; utilities are presented only in the menu. */
+.menu-modal{position:fixed;inset:0;z-index:30;display:none;justify-content:flex-end;align-items:flex-start;padding:12px;background:rgba(7,20,39,.7);backdrop-filter:blur(3px);overflow:auto}
+.menu-modal.show{display:flex}
+.menu-panel{width:min(490px,100%);max-height:calc(100dvh - 24px);overflow-y:auto;background:linear-gradient(180deg,#f0fbff,#fff7d9);border:4px solid #276d8c;border-radius:22px;box-shadow:0 9px #14364d;padding:17px;color:#17304e}
+.menu-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.menu-heading h2{margin:0;font-size:clamp(24px,5vw,31px);color:#145c78}
+.menu-close{border:0;border-radius:10px;width:42px;height:42px;background:#16345a;color:#fff;font-size:22px;font-weight:900;cursor:pointer}
+.menu-record{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#fff;border:2px solid #e6c65d;border-radius:13px;padding:12px 14px;margin-bottom:12px;font-weight:900}
+.menu-record strong{font-size:23px;color:#865a00}
+.menu-action-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-bottom:15px}
+.menu-action-grid .btn{min-width:0;width:100%;padding:11px 8px;font-size:14px}
+.menu-action-grid #factorBook{grid-column:1 / -1}
+.menu-section{background:rgba(255,255,255,.8);border:2px solid #c9e0ec;border-radius:14px;padding:12px;margin-top:12px}
+.menu-section h3{margin:0 0 9px;font-size:17px;color:#185d7a}
+.menu-stats-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.menu-stats-grid .score-card{box-shadow:none;padding:9px;border-color:#c9d9e8;background:#fff}
+.menu-stats-grid .score-card .value{font-size:19px}
+.menu-help{font-size:13px;line-height:1.52}
+.menu-help ul{margin:6px 0 0;padding-left:19px}
+.menu-help li{margin:5px 0}
+.menu-tip{font-size:12px;color:#50647b;margin-top:10px}
+.menu-modal button:focus-visible,.menu-toggle:focus-visible{outline:3px solid #ffbf2f;outline-offset:2px}
+@media(max-width:720px){
+ .header-main{align-items:flex-start}
+ .menu-toggle{padding:9px 11px;font-size:13px}
+ .header .stats{gap:6px}
+ .menu-modal{padding:8px}
+ .menu-panel{max-height:calc(100dvh - 16px);padding:13px;border-radius:18px}
+ .menu-action-grid{gap:7px}
+}
+@media(max-width:390px){.header-main h1{font-size:21px}.header-main .subtitle{max-width:240px}.menu-action-grid .btn{font-size:12px}.menu-stats-grid{gap:6px}}
+
+
+/* GAME-FIRST LAYOUT: compact HUD, larger playfield, and utility controls in the top-right. */
+.wrap{max-width:1500px;padding:clamp(7px,1vw,14px);margin:0 auto}
+.header{padding:12px 16px;border-radius:18px;border-width:3px;box-shadow:0 4px #09192d}
+.header-main{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:9px}
+.brand-lockup{min-width:0}.header-main h1{font-size:clamp(23px,2.6vw,36px);line-height:1.04;letter-spacing:.02em}
+.subtitle{font-size:11px;letter-spacing:.12em;font-weight:850;margin-top:5px}.subtitle span{color:#ffd43b;padding:0 3px}
+.top-actions{display:flex;align-items:center;gap:8px;flex:0 0 auto}
+.icon-action{width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center;border:2px solid #7ec7e5;border-radius:13px;background:linear-gradient(#2a6287,#173d60);color:#fff;font-size:23px;font-weight:1000;line-height:1;box-shadow:0 3px #0b2039;cursor:pointer;transition:transform .12s,filter .12s; padding:0}
+.icon-action:active:not(:disabled){transform:translateY(2px);box-shadow:0 1px #0b2039}
+.icon-action:disabled{opacity:.42;filter:grayscale(.7);cursor:not-allowed;box-shadow:0 3px #0b2039}
+.icon-action.reset-icon{background:linear-gradient(#ffe36a,#ffbd26);border-color:#ffeb91;color:#3c2a06;box-shadow:0 3px #a55e12}
+.menu-toggle{min-height:44px;min-width:44px;border:2px solid #83d9f4;border-radius:13px;padding:0}
+.header .stats{display:flex;justify-content:flex-start;align-items:center;flex-wrap:wrap;gap:6px;margin:0;padding-top:9px;border-top:1px solid rgba(200,235,255,.2)}
+.pill{display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border-radius:10px;font-size:13px;border-width:1px;box-shadow:0 2px rgba(0,0,0,.12)}
+.pill-label{font-weight:750;opacity:.8}
+.level-ribbon{font-size:11px;letter-spacing:.11em;padding:6px 12px;margin:10px auto 4px;border-width:1px;box-shadow:0 2px rgba(20,36,65,.15)}
+.quest{background:rgba(255,255,255,.78);border:1px solid rgba(55,132,169,.32);border-radius:12px;padding:8px 13px;margin:5px 0 7px;text-align:center;font-size:clamp(16px,1.7vw,22px);font-weight:950;box-shadow:0 2px 0 rgba(23,70,100,.09);color:#183653;line-height:1.25}
+.quest small{display:none}
+.factor-panel{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0 0 9px}
+.factor-card{display:flex;align-items:center;gap:9px;min-width:0;background:rgba(255,255,255,.91);border:1px solid #b7d8e8;border-radius:10px;padding:7px 11px;box-shadow:0 2px #477d9b}
+.factor-card strong{display:block;flex:0 0 auto;color:#45627b;font-size:11px;letter-spacing:.01em;margin:0;white-space:nowrap}
+.factor-card span{display:block;min-width:0;color:#183653;font-weight:850;font-size:clamp(12px,1.15vw,15px);line-height:1.35;overflow-wrap:anywhere}
+.all-same{display:none}
+.gamebox{width:100%;border:4px solid #4a321f;border-radius:20px;overflow:hidden;box-shadow:0 6px #332215,0 12px 28px rgba(10,45,71,.15);background:#78d9ff;line-height:0}
+.gamebox canvas{display:block;width:100%;height:auto;image-rendering:auto;touch-action:none;filter:saturate(1.06)}
+.controls{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:13px 1px 5px}
+.group{display:flex;gap:8px;flex-wrap:wrap}.movement-controls .btn{min-width:93px}
+.btn{border:0;border-radius:12px;padding:10px 15px;min-height:44px;font-size:14px;box-shadow:0 3px #a55e12}
+.game-actions{justify-content:flex-end;margin-left:auto}.game-actions .btn{min-width:118px}
+.start-button{min-width:105px!important}.power-button{background:linear-gradient(#d9c6ff,#b49bea);color:#2e1f57;box-shadow:0 3px #75609d}
+.feedback{min-height:24px;font-size:13px;line-height:1.35;color:#244967;text-align:center;margin:5px 0 0;padding:5px 10px;font-weight:800}
+/* Reduce chrome further on small screens while retaining large, easy-to-tap movement controls. */
+@media(min-width:1100px){.factor-panel{gap:10px}.factor-card{padding:8px 13px}.gamebox{border-radius:22px}.controls{margin-top:14px}}
+@media(max-width:720px){
+ .wrap{padding:7px}.header{padding:10px;border-radius:15px}.header-main{align-items:center;gap:8px;margin-bottom:8px}.header-main h1{font-size:clamp(20px,5.2vw,27px)}
+ .subtitle{font-size:9px;letter-spacing:.07em}.top-actions{gap:5px}.icon-action{width:38px;height:38px;border-radius:11px;font-size:20px}.menu-toggle{min-width:38px;min-height:38px}
+ .header .stats{gap:5px;padding-top:7px}.pill{font-size:11px;padding:5px 7px;gap:4px}.pill-label{display:none}
+ .level-ribbon{font-size:10px;padding:5px 10px;margin:8px auto 4px}
+ .quest{font-size:16px;padding:8px 10px;margin:5px 0 7px}
+ .factor-panel{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-bottom:7px}.factor-card{display:block;padding:6px 8px;border-radius:9px}.factor-card strong{font-size:10px;white-space:normal;margin-bottom:3px}.factor-card span{font-size:11px;line-height:1.32}
+ .gamebox{border-width:3px;border-radius:13px;box-shadow:0 4px #332215,0 7px 14px rgba(10,45,71,.12)}
+ .controls{display:flex;flex-direction:column;gap:8px;margin:10px 0 4px;align-items:stretch}
+ .movement-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;gap:7px;order:1}
+ .movement-controls .btn{width:100%;min-width:0;min-height:48px;padding:10px 5px;font-size:13px}
+ .game-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;gap:7px;margin:0;order:2}
+ .game-actions .btn{width:100%;min-width:0;min-height:43px;padding:9px 5px;font-size:12px;white-space:normal;line-height:1.15}
+ .feedback{font-size:12px;min-height:20px;margin-top:4px;padding:4px 2px}
+}
+@media(max-width:380px){.subtitle{display:none}.header-main h1{font-size:20px}.top-actions{gap:4px}.icon-action{width:35px;height:35px}.factor-card span{font-size:10px}.movement-controls .btn{font-size:12px}.game-actions .btn{font-size:11px}}
+@media(orientation:landscape) and (max-height:540px){.wrap{max-width:100%;padding:5px}.header{padding:6px 10px}.header-main{margin-bottom:4px}.header-main h1{font-size:22px}.subtitle{font-size:9px}.header .stats{padding-top:4px}.level-ribbon{margin:5px auto 3px}.quest{padding:5px 10px;margin:3px 0 5px}.factor-card{padding:4px 8px}.controls{margin:6px 0 0}.feedback{display:none}}
+
+</style>
+</head>
+<body>
+<main class="wrap">
+ <header class="header">
+  <div class="header-main">
+   <div class="brand-lockup"><h1>FAKTOR SEPUNYA</h1><div class="subtitle">5 DUNIA <span>•</span> PORTAL FAKTOR <span>•</span> RAJA FAKTOR</div></div>
+   <div class="top-actions" aria-label="Menu dan kawalan permainan">
+    <button class="icon-action menu-toggle" id="menuToggle" type="button" title="Buka menu" aria-label="Buka menu" aria-haspopup="dialog" aria-controls="menuModal" aria-expanded="false">☰</button>
+    <button class="icon-action" id="pause" type="button" title="Jeda permainan" aria-label="Jeda permainan" disabled>⏸</button>
+    <button class="icon-action reset-icon" id="reset" type="button" title="Reset permainan" aria-label="Reset permainan">↻</button>
+   </div>
+  </div>
+  <div class="stats" aria-label="Status permainan">
+   <div class="pill">⭐ <span class="pill-label">Skor</span> <span id="score">0</span></div>
+   <div class="pill">❤️ <span class="pill-label">Nyawa</span> <span id="lives">3/5</span></div>
+   <div class="pill">🏁 <span class="pill-label">Level</span> <span id="level">1/5</span></div>
+   <div class="pill combo-pill">⚡ <span class="pill-label">Kombo</span> <span id="comboStatus">0/3</span></div>
+   <div class="pill bonus-pill">💖 <span class="pill-label">Bonus</span> <span id="bonusLivesHud">0</span></div>
+  </div>
+ </header>
+ <div class="level-ribbon" id="levelName">LEVEL 1 • HUTAN FAKTOR • MUDAH</div>
+ <div class="quest" id="question">Faktor sepunya • 8 &amp; 12<small id="hintline">Bandingkan senarai faktor.</small></div>
+ <section class="factor-panel" aria-label="Senarai faktor untuk soalan semasa">
+  <div class="factor-card"><strong id="factorLabelA">Faktor bagi 8</strong><span id="factorA">1, 2, 4, 8</span></div>
+  <div class="factor-card"><strong id="factorLabelB">Faktor bagi 12</strong><span id="factorB">1, 2, 3, 4, 6, 12</span></div>
+ </section>
+ <div class="all-same" aria-hidden="true"><span>SEMUA KRISTAL WARNA SAMA — BACA NOMBOR!</span></div>
+ <div class="gamebox"><canvas id="game" width="960" height="440" aria-label="Permainan platform faktor sepunya"></canvas></div>
+ <div class="controls">
+  <div class="group movement-controls" aria-label="Kawalan watak">
+   <button class="btn dark" id="left" aria-label="Gerak kiri">⬅ Kiri</button>
+   <button class="btn dark" id="right" aria-label="Gerak kanan">Kanan ➡</button>
+   <button class="btn" id="jump" aria-label="Lompat">⬆ Lompat</button>
+  </div>
+  <div class="group game-actions" aria-label="Kawalan permainan">
+   <button class="btn start-button" id="start">▶ Mula</button>
+   <button class="btn alt" id="next" disabled>Misi seterusnya ➜</button>
+   <button class="btn power-button" id="power" disabled>⚡ Kuasa Kombo</button>
+  </div>
+ </div>
+ <div class="feedback" id="feedback" role="status" aria-live="polite">Tekan Mula untuk bermain.</div>
+</main>
+
+<div class="menu-modal" id="menuModal" role="dialog" aria-modal="true" aria-labelledby="menuTitle" aria-hidden="true">
+ <section class="menu-panel" aria-label="Menu permainan">
+  <div class="menu-heading"><h2 id="menuTitle">MENU PERMAINAN</h2><button class="menu-close" id="closeMenu" type="button" aria-label="Tutup menu">×</button></div>
+  <div class="menu-record"><span>🏆 Rekod tertinggi</span><strong id="bestScore">0</strong></div>
+  <div class="menu-action-grid">
+   <button class="btn alt" id="sound" type="button">🔊 Kesan bunyi: ON</button>
+   <button class="btn alt" id="music" type="button">🎵 Muzik: ON</button>
+   <button class="btn alt" id="factorBook" type="button">📖 Buka Buku Faktor</button>
+  </div>
+  <section class="menu-section" aria-label="Statistik permainan">
+   <h3>📊 Statistik permainan</h3>
+   <div class="menu-stats-grid">
+    <div class="score-card"><span class="label">JAWAPAN BETUL</span><span class="value" id="correctCount">0</span></div>
+    <div class="score-card"><span class="label">JAWAPAN SALAH</span><span class="value" id="wrongCount">0</span></div>
+    <div class="score-card"><span class="label">KETEPATAN</span><span class="value" id="accuracy">—</span></div>
+    <div class="score-card"><span class="label">CHECKPOINT</span><span class="value" id="checkpointLabel">Mula</span></div>
+    <div class="score-card"><span class="label">HAIWAN DITEWASKAN</span><span class="value" id="animalsDefeated">0</span></div>
+    <div class="score-card"><span class="label">NYAWA BONUS DIKUTIP</span><span class="value" id="bonusLivesCollected">0</span></div>
+   </div>
+  </section>
+  <section class="menu-section menu-help" aria-label="Arahan permainan">
+   <h3>🎮 Arahan permainan</h3>
+   <ul>
+    <li><b>Komputer:</b> gunakan ← dan → untuk bergerak, Space atau ↑ untuk melompat, F untuk mengaktifkan Kuasa Kombo, dan P untuk jeda.</li>
+    <li><b>Telefon:</b> gunakan butang Kiri, Kanan dan Lompat di bawah skrin permainan.</li>
+    <li>Bandingkan dua senarai faktor. Semua kristal bernombor mempunyai warna yang sama; lompat berhampiran kristal faktor sepunya untuk mengutipnya.</li>
+    <li>Elakkan duri dan haiwan. Lompat dan mendarat di atas kepala haiwan untuk mendapat +250 mata.</li>
+    <li>Setiap dua haiwan ditewaskan akan menjatuhkan kristal hati. Kutip 💖 untuk mendapat nyawa tambahan sehingga maksimum lima nyawa. Hati turut ditunjukkan dengan jelas pada laluan permainan.</li>
+    <li>Kumpulkan tiga kristal faktor sepunya berturut-turut untuk mengecas Kuasa Kombo. Apabila diaktifkan, pemain menjadi <b>kebal daripada duri dan haiwan selama 5 saat</b> serta haiwan dibekukan.</li>
+    <li>Sentuh bendera untuk mengaktifkan checkpoint. Jika jatuh atau terkena haiwan/duri, anda akan muncul semula pada bendera terakhir.</li>
+    <li>Kumpulkan semua faktor sepunya dan jawab cabaran Portal Faktor yang bertanya <b>bilangan faktor sepunya</b> bagi dua nombor dalam level itu.</li>
+    <li>Di Level 5, buka Portal Istana dan tewaskan Raja Faktor melalui tiga fasa cabaran faktor sepunya.</li>
+   </ul>
+   <p class="menu-tip">Tip: buka menu ini pada bila-bila masa untuk melihat rekod, statistik, muzik, kesan bunyi dan Buku Faktor. Permainan dijeda ketika menu dibuka.</p>
+  </section>
+ </section>
+</div>
+
+<div class="modal" id="portalModal" role="dialog" aria-modal="true" aria-labelledby="portalTitle">
+ <div class="modal-card portal-card">
+  <div class="portal-kicker">🌀 PORTAL FAKTOR • CABARAN BONUS</div>
+  <h2 id="portalTitle">BUKA PORTAL!</h2>
+  <p id="portalPrompt">Berapakah FSTB bagi dua nombor ini?</p>
+  <p class="modal-stats">Jawapan betul membuka portal dan peti harta karun bonus. Jawapan salah mengurangkan satu nyawa.</p>
+  <div id="portalOptions" class="portal-options" aria-label="Pilihan jawapan portal"></div>
+  <p id="portalFeedback" class="portal-feedback" role="status" aria-live="polite">Gunakan pengetahuan faktor sepunya untuk membuka portal.</p>
+ </div>
+</div>
+<div class="modal" id="factorBookModal" role="dialog" aria-modal="true" aria-labelledby="factorBookTitle">
+ <div class="modal-card">
+  <div class="portal-kicker">📖 KOLEKSI PEMBELAJARAN</div>
+  <h2 id="factorBookTitle" style="color:#245a83;text-shadow:none">BUKU FAKTOR</h2>
+  <p>Level 1–4 dibuka selepas Portal Faktor diaktifkan. Helaian Level 5 dibuka selepas Raja Faktor ditewaskan.</p>
+  <div id="factorBookContent" class="book-content"></div>
+  <button class="btn" id="closeFactorBook">Tutup Buku</button>
+ </div>
+</div>
+<div class="modal" id="bossModal" role="dialog" aria-modal="true" aria-labelledby="bossTitle">
+ <div class="modal-card boss-card">
+  <div class="boss-kicker">⚔️ CABARAN TERAKHIR</div>
+  <h2 id="bossTitle">RAJA FAKTOR</h2>
+  <p id="bossPrompt">Pilih satu faktor sepunya untuk menyerang boss!</p>
+  <div class="boss-health-wrap"><span class="boss-health-label">TENAGA BOSS</span><strong id="bossHealthText">❤️ ❤️ ❤️</strong></div>
+  <div id="bossOptions" class="boss-options" aria-label="Pilihan jawapan"></div>
+  <p id="bossFeedback" class="boss-feedback" role="status" aria-live="polite">Jawapan betul mengurangkan tenaga boss. Jawapan salah mengurangkan satu nyawa.</p>
+ </div>
+</div>
+<div class="modal" id="gameover" role="dialog" aria-modal="true" aria-labelledby="gameoverTitle">
+ <div class="modal-card"><h2 id="gameoverTitle">GAME OVER,</h2><p>NYAWA ANDA TELAH HABIS, SILA CUBA SEMULA!</p><p>SKOR AKHIR: <strong id="finalScore">0</strong></p><p class="modal-stats" id="finalStats">Level: 1/5</p><button class="btn" id="restartGame">↻ RESTART</button></div>
+</div>
+<div class="modal" id="victory" role="dialog" aria-modal="true" aria-labelledby="victoryTitle">
+ <div class="modal-card victory-card"><h2 id="victoryTitle">TAHNIAH,</h2><p>ANDA BERJAYA MENAMATKAN SEMUA 5 MISI FAKTOR SEPUNYA!</p><p>SKOR AKHIR: <strong id="victoryScore">0</strong></p><p class="modal-stats" id="victoryStats">Ketepatan: —</p><div style="font-size:clamp(40px,8vw,60px);margin:10px 0">🏆🎉⭐</div><button class="btn" id="restartWin">↻ MAIN SEMULA</button></div>
+</div>
+<script>
+'use strict';
+const canvas = document.getElementById('game');
+const ctx = canvas.getContext('2d');
+const levels = [
+ {title:'HUTAN FAKTOR',difficulty:'MUDAH',pairPool:[[8,12],[9,12],[10,15],[12,18],[14,21],[15,20],[16,24],[18,24],[20,28],[16,20]],enemyCount:1,spikeCount:2,theme:{sky1:'#69d2ff',sky2:'#e2fbff',hill:'#89dc77',hill2:'#51b879',top:'#58ca58',side:'#a85c2d',detail:'#dcf789',ledge:'#8d6bd2',ledgeTop:'#d2bbff',pit:'#25345c',accent:'#ffd84a'}},
+ {title:'GUA KRISTAL',difficulty:'SEDERHANA',pairPool:[[20,30],[24,36],[18,30],[28,42],[32,48],[24,40],[30,45],[36,48],[20,36],[27,36]],enemyCount:2,spikeCount:3,theme:{sky1:'#4a78bd',sky2:'#d9d7ff',hill:'#8887c9',hill2:'#59569c',top:'#4dc6b2',side:'#67418f',detail:'#a4fff0',ledge:'#7863ba',ledgeTop:'#d3c7ff',pit:'#171b43',accent:'#ffd84a'}},
+ {title:'GURUN NOMBOR',difficulty:'MENCABAR',pairPool:[[36,60],[32,56],[42,56],[40,60],[42,70],[45,75],[48,80],[54,72],[35,60],[45,60]],enemyCount:3,spikeCount:4,theme:{sky1:'#ffb36a',sky2:'#fff0b7',hill:'#eab15b',hill2:'#c9824a',top:'#85c957',side:'#a85b38',detail:'#e8f89a',ledge:'#c18c56',ledgeTop:'#ffe0a3',pit:'#614066',accent:'#fff071'}},
+ {title:'GUNUNG AWAN',difficulty:'SUKAR',pairPool:[[48,72],[54,90],[56,84],[60,96],[63,84],[64,96],[70,98],[72,120],[75,100],[80,120]],enemyCount:4,spikeCount:5,theme:{sky1:'#879bff',sky2:'#e7e7ff',hill:'#9aabe8',hill2:'#6e83c9',top:'#75d7b3',side:'#61558e',detail:'#e0ffe8',ledge:'#6b71bc',ledgeTop:'#c6d1ff',pit:'#29284d',accent:'#ffe075'}},
+ {title:'ISTANA RAJA FAKTOR',difficulty:'PAKAR',pairPool:[[72,90],[84,120],[90,126],[96,140],[108,150],[126,180],[132,180],[140,196],[150,210],[160,224]],enemyCount:5,spikeCount:6,theme:{sky1:'#4e65a9',sky2:'#e6ceff',hill:'#ab91dc',hill2:'#6d55a9',top:'#71ce7b',side:'#6f3c78',detail:'#e9f99a',ledge:'#875ab9',ledgeTop:'#e8c9ff',pit:'#211939',accent:'#ffdc5c'}}
+];
+// Soalan dirawakkan setiap kali permainan baharu dimulakan. Setiap bank kekal pada tahap kesukaran level itu.
+let rounds = [];
+function randomizeRounds(){
+ const used = new Set();
+ rounds = levels.map(level=>{
+  const available = level.pairPool.filter(pair=>!used.has(pair.join('-')));
+  const choices = available.length ? available : level.pairPool;
+  const pick = choices[Math.floor(Math.random()*choices.length)];
+  used.add(pick.join('-'));
+  return [...pick];
+ });
+}
+function makeAnswerChoices(correct, distractors, count=4){
+ const c = Number(correct);
+ const wrong = shuffle([...new Set(distractors.map(Number).filter(n=>Number.isFinite(n)&&Number.isInteger(n)&&n>0&&n!==c))]);
+ let offset = 1;
+ while(wrong.length<count-1){
+  const candidate = c+offset++;
+  if(candidate>0&&candidate!==c&&!wrong.includes(candidate)) wrong.push(candidate);
+ }
+ return shuffle([c,...wrong.slice(0,count-1)]);
+}
+const worldW = 2800;
+const levelSegments = [
+ [[0,590,390],[675,1225,375],[1310,1840,390],[1925,2800,390]],
+ [[0,560,390],[670,1090,360],[1200,1610,385],[1720,2130,355],[2240,2800,390]],
+ [[0,540,390],[660,1040,355],[1160,1540,380],[1660,2040,355],[2160,2800,390]],
+ [[0,520,390],[650,1005,350],[1140,1495,380],[1630,1985,345],[2120,2800,390]],
+ [[0,500,390],[640,970,350],[1110,1440,380],[1580,1910,345],[2060,2800,390]]
+];
+let floorSegments=[], platforms=[], spikeSpecs=[], checkpointSpecs=[], enemies=[], items=[], heartPickups=[];
+let idx=0, score=0, lives=3, running=false, paused=false, complete=false, endState=null;
+let keys={}, camera=0, correctCount=0, wrongCount=0, invulnerableUntil=0;
+const MAX_LIVES=5;
+let enemiesDefeated=0, bonusLivesCollected=0;
+let comboStreak=0, freezeReady=false, freezeUntil=0;
+let portalUnlocked=false, portalChallengeOpen=false, portalCorrectValue=null, portalChoices=[];
+let bossPhase=1, levelsCleared=new Set();
+let bookWasRunning=false, bookWasPaused=false;
+let menuWasRunning=false, menuWasPaused=false;
+let player={x:45,y:352,w:30,h:38,vx:0,vy:0,onGround:false,facing:1};
+let checkpoint={x:45,y:352,label:'Mula'}, activatedCheckpoints=new Set();
+let bestScore=readBestScore();
+let soundOn=true, musicOn=true, audioContext=null, musicTimer=null, musicStep=0;
+let bossBattleActive=false, bossHealth=3, bossCorrectValue=null, bossChoices=[], bossFirstCommonFactor=null, finalBoss={x:2670,y:298,w:82,h:92};
+const el=id=>document.getElementById(id);
+function readBestScore(){try{return Number(localStorage.getItem('faktorSepunyaBestScore')||0)}catch(e){return 0}}
+function saveBestScore(){if(score>bestScore){bestScore=score;try{localStorage.setItem('faktorSepunyaBestScore',String(bestScore))}catch(e){}}}
+function factors(n){const out=[];for(let i=1;i<=n;i++)if(n%i===0)out.push(i);return out}
+function common(a,b){return factors(a).filter(n=>b%n===0)}
+function gcd(a,b){while(b){const t=b;b=a%b;a=t}return Math.abs(a)}
+function setText(id,value){const node=el(id);if(node)node.textContent=String(value)}
+function updatePauseButton(){const b=el('pause');if(!b)return;const label=paused?'Sambung permainan':'Jeda permainan';b.textContent=paused?'▶':'⏸';b.title=label;b.setAttribute('aria-label',label)}
+function say(message){setText('feedback',message)}
+function accuracy(){const total=correctCount+wrongCount;return total?Math.round(correctCount/total*100)+'%':'—'}
+function updateScoreboard(){saveBestScore();setText('score',score);setText('bestScore',bestScore);setText('lives',`${lives}/${MAX_LIVES}`);setText('level',`${idx+1}/5`);setText('correctCount',correctCount);setText('wrongCount',wrongCount);setText('accuracy',accuracy());setText('checkpointLabel',checkpoint.label);setText('animalsDefeated',enemiesDefeated);setText('bonusLivesCollected',bonusLivesCollected);setText('bonusLivesHud',bonusLivesCollected);updateComboUI()}
+function updateComboUI(){
+ const btn=el('power');if(!btn)return;const remaining=Math.max(0,Math.ceil((freezeUntil-Date.now())/1000));
+ if(remaining>0){setText('comboStatus',`🛡 ${remaining}s`);btn.textContent=`🛡 KEBAL (${remaining}s)`;btn.disabled=true}
+ else if(freezeReady){setText('comboStatus','SEDIA!');btn.textContent='🛡 Guna Kuasa Kombo';btn.disabled=!(running&&!paused&&!endState)}
+ else{setText('comboStatus',`${comboStreak}/3`);btn.textContent='🛡 Kuasa Kombo';btn.disabled=!(running&&!paused&&!endState&&freezeReady)}
+}
+function useFreezePower(){
+ if(!running||paused||endState||!freezeReady||Date.now()<freezeUntil)return;
+ freezeReady=false;comboStreak=0;freezeUntil=Date.now()+5000;
+ // Tempoh kebal sama dengan tempoh beku, ditambah sedikit masa untuk keluar dari zon bahaya.
+ invulnerableUntil=freezeUntil+650;
+ say('KUASA KOMBO DIAKTIFKAN! Selama 5 saat, anda KEBAL — duri dan haiwan tidak boleh mencederakan anda.');sound('freeze');updateComboUI();draw();
+}
+function renderFactorBook(){
+ const host=el('factorBookContent');
+ host.innerHTML='';
+ levels.forEach((level,i)=>{
+  const page=document.createElement('article');
+  page.className='book-page';
+  const opened=levelsCleared.has(i);
+  const h=document.createElement('h3');
+  h.textContent=`${opened?'🔓':'🔒'} Level ${i+1}: ${level.title}`;
+  page.appendChild(h);
+  const status=document.createElement('p');
+  if(opened) status.textContent='Helaian dibuka! Semak faktor setiap nombor dan bilangan faktor sepunya.';
+  else if(i===4) status.textContent='Helaian akhir dibuka selepas Raja Faktor ditewaskan.';
+  else if(i===idx) status.textContent='Selesaikan semua kristal dan cabaran Portal Faktor untuk membuka helaian ini.';
+  else status.textContent='Selesaikan level dan cabaran portalnya untuk membuka helaian.';
+  page.appendChild(status);
+  if(opened){
+   const [a,b]=rounds[i];
+   const add=(label,value,cls='')=>{
+    const p=document.createElement('p');
+    p.textContent=`${label}: ${value}`;
+    if(cls)p.className=cls;
+    page.appendChild(p);
+   };
+   add(`Faktor ${a}`,factors(a).join(', '));
+   add(`Faktor ${b}`,factors(b).join(', '));
+   add('Faktor sepunya',common(a,b).join(', '),'answer');
+   add('Bilangan faktor sepunya',String(common(a,b).length),'answer');
+  }
+  host.appendChild(page);
+ });
+}
+function openMenu(){
+ if(bossBattleActive||portalChallengeOpen||el('factorBookModal').classList.contains('show'))return;
+ menuWasRunning=running;menuWasPaused=paused;
+ if(running&&!paused){paused=true;stopMusic()}
+ updatePauseButton();
+ updateScoreboard();document.body.style.overflow='hidden';el('menuModal').classList.add('show');el('menuModal').setAttribute('aria-hidden','false');el('menuToggle').setAttribute('aria-expanded','true');
+}
+function closeMenu(){
+ if(!el('menuModal').classList.contains('show'))return;
+ el('menuModal').classList.remove('show');el('menuModal').setAttribute('aria-hidden','true');el('menuToggle').setAttribute('aria-expanded','false');document.body.style.overflow='';
+ if(menuWasRunning&&!endState){running=true;paused=menuWasPaused;if(!paused)startMusic()}
+ updatePauseButton();
+ menuWasRunning=false;menuWasPaused=false;
+}
+function openFactorBook(){
+ if(endState||bossBattleActive||portalChallengeOpen)return;
+ const openedFromMenu=el('menuModal').classList.contains('show');
+ if(openedFromMenu){
+  bookWasRunning=menuWasRunning;bookWasPaused=menuWasPaused;
+  el('menuModal').classList.remove('show');el('menuModal').setAttribute('aria-hidden','true');el('menuToggle').setAttribute('aria-expanded','false');document.body.style.overflow='';
+  menuWasRunning=false;menuWasPaused=false;
+  if(running){running=false;stopMusic()}
+ }else{bookWasRunning=running;bookWasPaused=paused;if(running){running=false;stopMusic()}}
+ renderFactorBook();el('factorBookModal').classList.add('show');
+}
+function closeFactorBook(){el('factorBookModal').classList.remove('show');if(bookWasRunning&&!endState){running=true;paused=bookWasPaused;if(!paused)startMusic();requestAnimationFrame(loop)}bookWasRunning=false;bookWasPaused=false;updateComboUI()}
+function showPortalQuestion(){
+ const [a,b]=rounds[idx];
+ const commonFactors=common(a,b);
+ portalCorrectValue=commonFactors.length;
+ const distractors=[portalCorrectValue-3,portalCorrectValue-2,portalCorrectValue-1,
+  portalCorrectValue+1,portalCorrectValue+2,portalCorrectValue+3,
+  portalCorrectValue+4,commonFactors.length+5, factors(a).length, factors(b).length];
+ portalChoices=makeAnswerChoices(portalCorrectValue,distractors);
+ setText('portalPrompt',`Ada berapa FAKTOR SEPUNYA bagi ${a} dan ${b}?`);
+ setText('portalFeedback','Bandingkan kedua-dua senarai faktor dan kira nombor yang muncul dalam kedua-duanya. Jawapan betul membuka portal dan memberi +300 mata.');
+ setText('portalTitle',idx===rounds.length-1?'AKTIFKAN PORTAL ISTANA!':'BUKA PORTAL!');
+ // Pastikan satu jawapan betul dan empat pilihan berbeza.
+ if(portalChoices.filter(v=>v===portalCorrectValue).length!==1 || new Set(portalChoices).size!==4){
+  portalChoices=makeAnswerChoices(portalCorrectValue,distractors);
+ }
+ const node=el('portalOptions');
+ node.innerHTML='';
+ portalChoices.forEach((n,i)=>{
+  const btt=document.createElement('button');
+  btt.type='button';
+  btt.className='btn alt';
+  btt.textContent=`${String.fromCharCode(65+i)}. ${n}`;
+  btt.dataset.answer=String(n);
+  btt.addEventListener('click',()=>answerPortal(Number(btt.dataset.answer)));
+  node.appendChild(btt);
+ });
+}
+function openPortalChallenge(){
+ if(portalChallengeOpen||portalUnlocked||endState)return;
+ portalChallengeOpen=true;running=false;paused=false;keys={};stopMusic();showPortalQuestion();
+ el('portalModal').classList.add('show');sound('portal');
+}
+function answerPortal(answer){
+ if(!portalChallengeOpen||endState)return;
+ const selected=Number(answer),correct=Number(portalCorrectValue);
+ if(!Number.isFinite(selected)||!Number.isFinite(correct)){
+  setText('portalFeedback','Ralat pilihan jawapan. Cuba pilih jawapan sekali lagi.');
+  return;
+ }
+ if(selected!==correct){
+  lives--;wrongCount++;updateScoreboard();sound('wrong');
+  if(lives<=0){portalChallengeOpen=false;el('portalModal').classList.remove('show');finish(false);return;}
+  setText('portalFeedback',`Belum tepat. Nyawa berbaki ${lives}. Bandingkan kedua-dua senarai dan kira nombor yang muncul dalam kedua-duanya.`);
+  return;
+ }
+ // Jawapan betul membuka portal sekali sahaja. Kunci keadaan sebelum menutup modal untuk elakkan klik berganda.
+ portalChallengeOpen=false;
+ portalUnlocked=true;
+ score+=300;correctCount++;
+ if(idx!==rounds.length-1)levelsCleared.add(idx);
+ updateScoreboard();sound('portal');
+ el('portalModal').classList.remove('show');
+ if(idx===rounds.length-1){
+  say('Portal Istana terbuka! +300 mata. Kini hadapi Raja Faktor dalam tiga fasa Matematik!');
+  draw();beginBossFight();return;
+ }
+ running=false;paused=false;keys={};
+ el('pause').disabled=true;el('next').disabled=false;el('start').disabled=true;
+ say(`Tahniah! Portal terbuka dan peti harta karun memberi +300 mata. Tekan Misi Seterusnya untuk ke Level ${idx+2}.`);
+ draw();updateComboUI();
+}
+function ensureAudio(){try{const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return null;if(!audioContext)audioContext=new AC();if(audioContext.state==='suspended')audioContext.resume().catch(()=>{});return audioContext}catch(e){return null}}
+function playTone(freq,duration,type='sine',volume=.05,delay=0){const ac=ensureAudio();if(!ac)return;const now=ac.currentTime+delay,osc=ac.createOscillator(),gain=ac.createGain();osc.type=type;osc.frequency.setValueAtTime(freq,now);gain.gain.setValueAtTime(.0001,now);gain.gain.exponentialRampToValueAtTime(Math.max(.001,volume),now+.012);gain.gain.exponentialRampToValueAtTime(.0001,now+duration);osc.connect(gain);gain.connect(ac.destination);osc.start(now);osc.stop(now+duration+.025)}
+function sound(kind){if(!soundOn)return;const notes={jump:[[470,.07,'square']],correct:[[660,.08,'sine'],[880,.12,'sine']],wrong:[[210,.16,'sawtooth']],hit:[[130,.2,'sawtooth'],[95,.12,'triangle']],enemy:[[170,.11,'square'],[120,.14,'sawtooth']],stomp:[[260,.055,'square'],[390,.075,'triangle']],life:[[720,.08,'sine'],[960,.12,'sine'],[1180,.14,'sine']],checkpoint:[[520,.08,'sine'],[760,.12,'sine']],door:[[540,.1,'triangle'],[700,.1,'triangle'],[920,.18,'triangle']],win:[[523,.12,'triangle'],[659,.12,'triangle'],[784,.12,'triangle'],[1046,.25,'triangle']],over:[[280,.16,'sawtooth'],[190,.3,'sawtooth']],click:[[420,.04,'sine']],combo:[[590,.07,'triangle'],[790,.09,'triangle'],[990,.14,'triangle']],freeze:[[720,.08,'triangle'],[500,.11,'sine'],[320,.18,'sine']],portal:[[390,.08,'triangle'],[590,.09,'triangle'],[790,.12,'sine']]};(notes[kind]||[]).forEach(([f,d,t],i)=>playTone(f,d,t,.055,i*.095))}
+function startMusic(){if(!musicOn||!running||paused||endState||musicTimer)return;if(!ensureAudio())return;const melody=[262,330,392,330,294,349,440,349,262,330,392,523,440,392,349,330],bass=[131,0,196,0,147,0,220,0];musicTimer=setInterval(()=>{if(!musicOn||!running||paused||endState)return;const n=musicStep%melody.length;playTone(melody[n],.19,'triangle',.018);if(musicStep%2===0)playTone(bass[(musicStep/2)%bass.length],.24,'sine',.012,.015);musicStep++},230)}
+function stopMusic(){if(musicTimer){clearInterval(musicTimer);musicTimer=null}}
+function shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]]}return arr}
+function makeLevelGeometry(){
+ const theme=levels[idx].theme;
+ floorSegments=levelSegments[idx].map(([x,end,y])=>({x,y,w:end-x,h:440-y,kind:'ground'}));
+ platforms=[...floorSegments];
+ // Batu pijakan terapung di atas setiap jurang: membantu lompatan tetapi masih boleh terlepas dan jatuh.
+ for(let i=0;i<floorSegments.length-1;i++){
+  const a=floorSegments[i],b=floorSegments[i+1],gap=b.x-(a.x+a.w);
+  const w=Math.max(48,Math.min(92,gap-(idx*3+18)));
+  const x=a.x+a.w+(gap-w)/2;
+  platforms.push({x,y:Math.min(a.y,b.y)-58-(idx>2?8:0),w,h:16,kind:'ledge'});
+ }
+ // Checkpoint hanya berada di permukaan platform sebenar.
+ const cpIndices=[1,Math.max(2,floorSegments.length-2)].filter((v,i,a)=>a.indexOf(v)===i&&v<floorSegments.length);
+ checkpointSpecs=cpIndices.map((si,i)=>({x:floorSegments[si].x+Math.min(58,floorSegments[si].w*.18),groundY:floorSegments[si].y,label:`Bendera ${i+1}`}));
+ // Duri merah dipasang pada platform sebenar. Bilangan meningkat setiap level.
+ spikeSpecs=[];
+ const desired=levels[idx].spikeCount, counts=Array(floorSegments.length).fill(0);
+ for(let i=0;i<desired;i++)counts[Math.floor(i*floorSegments.length/desired)]++;
+ // ZON SELAMAT: duri hanya diletakkan di laluan tengah, tidak di bawah kristal jawapan.
+ // Kristal berada pada 20% dan 78% lebar platform (68% di hujung Level 5).
+ floorSegments.forEach((s,si)=>{
+  const safeFractions=counts[si]>1?[.42,.58]:[.50];
+  for(let j=0;j<counts[si];j++){
+   const frac=safeFractions[j%safeFractions.length];
+   spikeSpecs.push({x:s.x+s.w*frac,w:30,baseY:s.y});
+  }
+ });
+ // Haiwan bergerak mengikut platform; bilangan, kelajuan dan jenis meningkat ikut kesukaran.
+ const n=levels[idx].enemyCount, segN=floorSegments.length;
+ let enemySegments=[];
+ if(idx===0)enemySegments=[1];
+ else if(idx===1)enemySegments=[1,3];
+ else if(idx===2)enemySegments=[1,2,3];
+ else if(idx===3)enemySegments=[0,1,3,4];
+ else enemySegments=[0,1,2,3,4];
+ const kinds=['slime','beetle','fox','crab','hedgehog'];
+ enemies=enemySegments.slice(0,n).map((si,j)=>{const s=floorSegments[Math.min(si,segN-1)],w=40,h=30;let minX=s.x+s.w*.35,maxX=s.x+s.w*.60-w; // Rondaan lebih ke tengah supaya tidak bertindih dengan laluan kristal.
+  if(idx===4&&si===4)maxX=Math.min(maxX,worldW-190);return{x:(minX+maxX)/2,y:s.y-h,w,h,minX,maxX,dir:j%2?1:-1,speed:1.05+idx*.22+j*.11,kind:kinds[(idx+j)%kinds.length],phase:j*.9}});
+ finalBoss={x:worldW-130,y:floorSegments[floorSegments.length-1].y-92,w:82,h:92};
+}
+function setup(){
+ makeLevelGeometry();heartPickups=[];checkpoint={x:45,y:floorSegments[0].y-38,label:'Mula'};activatedCheckpoints=new Set();comboStreak=0;freezeReady=false;freezeUntil=0;portalUnlocked=false;portalChallengeOpen=false;
+ const [a,b]=rounds[idx],good=common(a,b),fa=factors(a),fb=factors(b),info=levels[idx];
+ el('question').firstChild.textContent=`Faktor sepunya • ${a} & ${b}`;
+ setText('levelName',`LEVEL ${idx+1} • ${info.title} • ${info.difficulty}`);
+ setText('hintline',idx===4?'Kumpulkan semua faktor sepunya, dekati Raja Faktor dan jawab 3 cabaran faktor sepunya untuk menewaskannya.':'Bandingkan kedua-dua senarai faktor. Lompat untuk mengutip kristal pilihan dan elakkan haiwan serta duri.');
+ setText('factorLabelA',`Faktor bagi ${a}`);setText('factorA',fa.join(', '));setText('factorLabelB',`Faktor bagi ${b}`);setText('factorB',fb.join(', '));
+ complete=false;keys={};
+ // KRISTAL JAWAPAN: letakkan pada dua lorong tepi yang bebas daripada duri dan rondaan haiwan.
+ // Kristal kedua di segmen terakhir Level 5 dialihkan ke 68% supaya jauh daripada Raja Faktor dan portal.
+ const slotXs=[];floorSegments.forEach((s,si)=>{
+  slotXs.push(s.x+s.w*.20);
+  const rightFraction=(idx===4&&si===floorSegments.length-1)?.68:.78;
+  slotXs.push(s.x+s.w*rightFraction);
+ });
+ const candidates=[...good],wrong=[...new Set([...fa,...fb].filter(v=>!good.includes(v)))];shuffle(wrong);
+ while(candidates.length<slotXs.length&&wrong.length)candidates.push(wrong.pop());
+ let distractor=1;while(candidates.length<slotXs.length){let v=Math.max(a,b)+distractor++;if(!good.includes(v)&&!candidates.includes(v))candidates.push(v)}
+ shuffle(candidates);
+ items=slotXs.map((x,i)=>{const seg=floorSegments.find(s=>x>=s.x&&x<=s.x+s.w)||floorSegments[0];return{n:candidates[i],x,y:seg.y-175,good:good.includes(candidates[i]),collected:false}});
+ const first=floorSegments[0];player={x:45,y:first.y-38,w:30,h:38,vx:0,vy:0,onGround:true,facing:1};camera=0;invulnerableUntil=0;
+ bossBattleActive=false;bossHealth=3;bossCorrectValue=null;bossChoices=[];
+ el('next').disabled=true;el('gameover').classList.remove('show');el('victory').classList.remove('show');el('bossModal').classList.remove('show');el('portalModal').classList.remove('show');el('factorBookModal').classList.remove('show');updateScoreboard();draw();
+}
+function setControlsDisabled(disabled){['left','right','jump','start','next','pause','reset','power','factorBook','sound','music'].forEach(id=>{const b=el(id);if(b)b.disabled=disabled})}
+function start(){if(running||endState)return;running=true;paused=false;el('start').disabled=true;el('pause').disabled=false;updatePauseButton();say('Kumpulkan kristal faktor sepunya.');sound('click');startMusic();requestAnimationFrame(loop)}
+function reset(){stopMusic();document.body.style.overflow='';el('menuModal').classList.remove('show');el('menuModal').setAttribute('aria-hidden','true');el('menuToggle').setAttribute('aria-expanded','false');menuWasRunning=false;menuWasPaused=false;running=false;paused=false;idx=0;randomizeRounds();score=0;lives=3;complete=false;endState=null;bossBattleActive=false;bossHealth=3;bossPhase=1;correctCount=0;wrongCount=0;enemiesDefeated=0;bonusLivesCollected=0;heartPickups=[];activatedCheckpoints=new Set();levelsCleared=new Set();comboStreak=0;freezeReady=false;freezeUntil=0;portalUnlocked=false;portalChallengeOpen=false;keys={};setControlsDisabled(false);el('start').disabled=false;el('next').disabled=true;el('pause').disabled=true;updatePauseButton();el('bossModal').classList.remove('show');setup();say('Permainan dimulakan semula. Tekan Mula untuk bermain.');sound('click')}
+function togglePause(){if(endState||!running)return;paused=!paused;updatePauseButton();say(paused?'Permainan dijeda. Tekan Sambung untuk terus bermain.':'Permainan disambung semula.');sound('click');if(paused)stopMusic();else startMusic()}
+function jump(){if(running&&!paused&&!endState&&player.onGround){player.vy=-13.3;player.onGround=false;sound('jump')}}
+function hit(a,b){return a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y}
+function loop(){if(!running)return;if(!paused)update();draw();if(running)requestAnimationFrame(loop)}
+// Letakkan kristal nyawa di atas permukaan platform yang selamat, bukan di zon duri/haiwan.
+function spawnSafeHeartPickup(defeatedEnemy){
+ const enemyCenter=defeatedEnemy.x+defeatedEnemy.w/2;
+ const enemyFloorY=defeatedEnemy.y+defeatedEnemy.h;
+ const sourceSeg=floorSegments.find(s=>Math.abs(s.y-enemyFloorY)<18&&enemyCenter>=s.x&&enemyCenter<=s.x+s.w)
+   ||floorSegments.reduce((best,s)=>Math.abs(s.y-enemyFloorY)<Math.abs(best.y-enemyFloorY)?s:best,floorSegments[0]);
+ const playerCenter=player.x+player.w/2;
+ const safeEdge=55;
+ const spikeClearance=47; // Lebih besar daripada separuh badan pemain + jarak kecil.
+ const candidates=[];
+ function safeAt(x,seg){
+  if(x<seg.x+safeEdge||x>seg.x+seg.w-safeEdge)return false;
+  const segSpikes=spikeSpecs.filter(sp=>Math.abs(sp.baseY-seg.y)<3);
+  if(segSpikes.some(sp=>x>sp.x-spikeClearance&&x<sp.x+sp.w+spikeClearance))return false;
+  if(heartPickups.some(h=>!h.collected&&Math.abs(h.x-x)<58&&Math.abs(h.y-(seg.y-43))<24))return false;
+  const liveEnemies=enemies.filter(e=>!e.dead&&e!==defeatedEnemy&&Math.abs((e.y+e.h)-seg.y)<18);
+  if(liveEnemies.some(e=>x>e.minX-28&&x<e.maxX+e.w+28))return false;
+  return true;
+ }
+ // Cari posisi selamat pada platform yang sama dahulu.
+ for(let x=sourceSeg.x+safeEdge;x<=sourceSeg.x+sourceSeg.w-safeEdge;x+=4){
+  if(safeAt(x,sourceSeg)){
+   const segSpikes=spikeSpecs.filter(sp=>Math.abs(sp.baseY-sourceSeg.y)<3);
+   const lo=Math.min(playerCenter,x),hi=Math.max(playerCenter,x);
+   const noSpikeBetween=!segSpikes.some(sp=>sp.x+sp.w>lo&&sp.x<hi);
+   candidates.push({x,seg:sourceSeg,noSpikeBetween,dist:Math.abs(playerCenter-x),sameSegment:true});
+  }
+ }
+ // Jika zon selamat pada platform ini penuh, pilih platform lain yang ada laluan selamat.
+ if(!candidates.length){
+  for(const seg of floorSegments){
+   for(let x=seg.x+safeEdge;x<=seg.x+seg.w-safeEdge;x+=4){
+    if(safeAt(x,seg))candidates.push({x,seg,noSpikeBetween:false,dist:Math.abs(playerCenter-x),sameSegment:seg===sourceSeg});
+   }
+  }
+ }
+ if(!candidates.length)return null;
+ candidates.sort((a,b)=>Number(b.noSpikeBetween)-Number(a.noSpikeBetween)||Number(b.sameSegment)-Number(a.sameSegment)||a.dist-b.dist);
+ const chosen=candidates[0];
+ // Letakkan hati pada aras pemain boleh capai; posisinya kekal jauh di sisi duri.
+ return {x:chosen.x,y:chosen.seg.y-43,phase:Math.random()*6.28,collected:false,bornAt:Date.now(),labelUntil:Date.now()+4200,safePlatformX:chosen.seg.x};
+}
+function update(){
+ player.vx=(keys.left?-4.2:0)+(keys.right?4.2:0);if(player.vx<0)player.facing=-1;else if(player.vx>0)player.facing=1;
+ if(keys.jump&&player.onGround){player.vy=-13.3;player.onGround=false;keys.jump=false;sound('jump')}
+ player.x=Math.max(0,Math.min(worldW-player.w,player.x+player.vx));const oldY=player.y,oldBottom=oldY+player.h;player.vy=Math.min(15,player.vy+.57);player.y+=player.vy;player.onGround=false;
+ let landing=null;for(const p of platforms){if(player.x+player.w>p.x&&player.x<p.x+p.w&&oldBottom<=p.y+1&&player.y+player.h>=p.y&&player.vy>=0){if(!landing||p.y<landing.y)landing=p}}
+ if(landing){player.y=landing.y-player.h;player.vy=0;player.onGround=true}
+ if(player.y>canvas.height+35){loseLife('Anda terjatuh ke dalam jurang! Checkpoint menyelamatkan anda.');return}
+ checkpointSpecs.forEach((cp,i)=>{const near=player.x+player.w>cp.x-7&&player.x<cp.x+27,onFlag=player.onGround&&Math.abs(player.y-(cp.groundY-player.h))<7;if(near&&onFlag&&!activatedCheckpoints.has(i)){activatedCheckpoints.add(i);checkpoint={x:cp.x+8,y:cp.groundY-player.h,label:cp.label};updateScoreboard();say(`${cp.label} diaktifkan! Jika jatuh atau disentuh haiwan, anda akan kembali ke bendera ini.`);sound('checkpoint')}});
+ if(Date.now()>invulnerableUntil && Date.now()>=freezeUntil){for(const s of spikeSpecs){if(hit(player,{x:s.x,y:s.baseY-23,w:s.w,h:23})){loseLife('Awas duri! Satu nyawa telah digunakan.');return}}
+  // Serang haiwan dengan mendarat di atas kepalanya ketika sedang jatuh.
+  for(const enemy of enemies){if(enemy.dead)continue;const enemyBox={x:enemy.x+3,y:enemy.y+2,w:enemy.w-6,h:enemy.h-3};if(hit(player,enemyBox)){
+    const stomping=player.vy>=0&&oldBottom<=enemy.y+enemy.h*.88;
+    if(stomping){
+      enemy.dead=true;enemiesDefeated++;score+=250;player.vy=-8.8;player.onGround=false;
+      let heartDropped=false;
+      if(enemiesDefeated%2===0){const heart=spawnSafeHeartPickup(enemy);if(heart){heartPickups.push(heart);heartDropped=true;}}
+      updateScoreboard();sound('stomp');
+      say(`Hebat! Haiwan ditewaskan: +250 mata.${heartDropped?' 💖 Kristal nyawa tambahan muncul di kawasan selamat pada platform!':''}`);
+      break;
+    }else{loseLife(`Awas! Haiwan ${enemy.kind==='fox'?'rubah':enemy.kind==='crab'?'ketam':enemy.kind==='beetle'?'kumbang':enemy.kind==='hedgehog'?'landak':'lendir'} telah menangkap anda.`);return}
+  }}
+ }
+ if(Date.now()>=freezeUntil){enemies.forEach(e=>{if(e.dead)return;e.x+=e.speed*e.dir;if(e.x<e.minX){e.x=e.minX;e.dir=1}else if(e.x>e.maxX){e.x=e.maxX;e.dir=-1}})}updateComboUI();
+ // Kristal hati muncul selepas setiap dua haiwan ditewaskan, pada ketinggian yang mudah dicapai. Nyawa maksimum ialah lima.
+ for(const heart of heartPickups){if(heart.collected||Date.now()-(heart.bornAt||0)<320)continue;const bob=Math.sin(Date.now()/180+heart.phase)*3;if(hit(player,{x:heart.x-13,y:heart.y+bob-13,w:26,h:26})){
+   heart.collected=true;
+   if(lives<MAX_LIVES){lives++;bonusLivesCollected++;score+=50;say(`Nyawa tambahan diperoleh! ❤️ Nyawa: ${lives}/${MAX_LIVES} (+50 mata).`)}
+   else{score+=100;say('Nyawa sudah penuh! Kristal hati ditukar kepada +100 mata bonus.')}
+   updateScoreboard();sound('life');
+ }}
+ for(const item of items){if(item.collected)continue;if(hit(player,{x:item.x-17,y:item.y-17,w:34,h:34})){item.collected=true;if(item.good){score+=100;correctCount++;if(!freezeReady&&Date.now()>=freezeUntil){comboStreak++;if(comboStreak>=3){comboStreak=0;freezeReady=true;say('KOMBO FAKTOR! Kuasa beku sudah dicas. Tekan “Kuasa Kombo” untuk membekukan haiwan selama 5 saat.');sound('combo')}else{say(`Betul! ${item.n} ialah faktor sepunya. +100 mata. Kombo ${comboStreak}/3.`);sound('correct')}}else{say(`Betul! ${item.n} ialah faktor sepunya. +100 mata.`);sound('correct')}}else{lives--;wrongCount++;comboStreak=0;say(`${item.n} bukan faktor sepunya. Satu nyawa telah digunakan; kombo terputus.`);sound('wrong')}updateScoreboard();if(lives<=0){finish(false);return}}}
+ if(items.filter(i=>i.good&&!i.collected).length===0&&!complete){complete=true;say('Bagus! Semua faktor sepunya telah dikumpulkan. Teruskan ke pintu emas!');sound('door')}
+ if(idx===rounds.length-1){const bossBox={x:finalBoss.x+7,y:finalBoss.y+8,w:finalBoss.w-14,h:finalBoss.h-8};if(hit(player,bossBox)){if(complete){if(portalUnlocked){beginBossFight();return}openPortalChallenge();return}player.x=Math.min(player.x,finalBoss.x-player.w-12);player.vx=0;keys.right=false;say('Kumpulkan semua faktor sepunya dahulu sebelum mengaktifkan Portal Istana!')}}
+ else{const endSeg=floorSegments[floorSegments.length-1],door={x:worldW-75,y:endSeg.y-70,w:42,h:70};if(complete&&hit(player,door)&&!portalUnlocked){openPortalChallenge();return}}
+ camera=Math.max(0,Math.min(worldW-canvas.width,player.x-canvas.width*.35));
+}
+function loseLife(message){lives--;invulnerableUntil=Date.now()+1400;updateScoreboard();sound('hit');if(lives<=0){finish(false);return}player.x=checkpoint.x;player.y=checkpoint.y;player.vx=0;player.vy=0;player.onGround=true;keys={};say(`${message} Nyawa berbaki: ${lives}.`)}
+function beginBossFight(){if(bossBattleActive||endState)return;bossBattleActive=true;running=false;paused=false;keys={};stopMusic();setControlsDisabled(true);bossHealth=3;bossPhase=1;bossCorrectValue=null;bossFirstCommonFactor=null;setText('bossHealthText','❤️ ❤️ ❤️');el('bossFeedback').textContent='Raja Faktor ada tiga fasa. Semua cabaran berkaitan mengenal pasti faktor sepunya bagi dua nombor. Jawapan salah mengurangkan satu nyawa.';el('bossModal').classList.add('show');sound('door');showBossQuestion()}
+function showBossQuestion(){
+ const [a,b]=rounds[rounds.length-1],valid=common(a,b);
+ let candidates=[],prompt='',distractors=[];
+ if(bossPhase===1){
+  bossCorrectValue=valid[Math.floor(Math.random()*valid.length)];
+  distractors=[...new Set([...factors(a),...factors(b),a,b,5,7,11,13,17,19])].filter(n=>!valid.includes(n));
+  prompt=`FASA 1/3 — PILIH SATU FAKTOR SEPUNYA bagi ${a} dan ${b}.`;
+ }else if(bossPhase===2){
+  bossCorrectValue=valid.length;
+  distractors=[bossCorrectValue-3,bossCorrectValue-2,bossCorrectValue-1,bossCorrectValue+1,bossCorrectValue+2,bossCorrectValue+3,factors(a).length,factors(b).length];
+  prompt=`FASA 2/3 — Ada berapa faktor sepunya bagi ${a} dan ${b}?`;
+ }else{
+  const remaining=valid.filter(n=>n!==bossFirstCommonFactor);
+  const pool=remaining.length?remaining:valid;
+  bossCorrectValue=pool[Math.floor(Math.random()*pool.length)];
+  distractors=[...new Set([...factors(a),...factors(b),a,b,5,7,11,13,17,19])].filter(n=>!valid.includes(n));
+  prompt=`FASA 3/3 — Pilih satu lagi faktor sepunya bagi ${a} dan ${b}.`;
+ }
+ bossChoices=makeAnswerChoices(bossCorrectValue,distractors);
+ if(bossChoices.length!==4||new Set(bossChoices).size!==4||bossChoices.filter(n=>n===bossCorrectValue).length!==1){
+  bossChoices=makeAnswerChoices(bossCorrectValue,[bossCorrectValue-3,bossCorrectValue-2,bossCorrectValue-1,bossCorrectValue+1,bossCorrectValue+2,bossCorrectValue+3]);
+ }
+ setText('bossPrompt',prompt);
+ setText('bossHealthText',Array.from({length:3},(_,i)=>i<bossHealth?'❤️':'🖤').join(' '));
+ const node=el('bossOptions');node.innerHTML='';
+ bossChoices.forEach((n,i)=>{const btt=document.createElement('button');btt.type='button';btt.className='btn alt';btt.textContent=`${String.fromCharCode(65+i)}. ${n}`;btt.addEventListener('click',()=>answerBoss(n));node.appendChild(btt)});
+}
+function answerBoss(n){if(!bossBattleActive||endState)return;if(n===bossCorrectValue){if(bossPhase===1)bossFirstCommonFactor=n;score+=250;correctCount++;bossHealth--;bossPhase++;updateScoreboard();sound('correct');if(bossHealth<=0){bossBattleActive=false;levelsCleared.add(4);el('bossModal').classList.remove('show');sound('win');finish(true);return}showBossQuestion();setText('bossFeedback',`Tepat! Fasa ${bossPhase-1} selesai. Raja Faktor kehilangan tenaga. Bersedia untuk fasa ${bossPhase}!`)}else{lives--;wrongCount++;updateScoreboard();sound('wrong');if(lives<=0){bossBattleActive=false;el('bossModal').classList.remove('show');finish(false);return}setText('bossFeedback',`Belum tepat. Nyawa berbaki ${lives}. Cuba lagi untuk fasa yang sama.`)}}
+function finish(won){stopMusic();running=false;paused=false;keys={};bossBattleActive=false;portalChallengeOpen=false;endState=won?'won':'lost';if(won)levelsCleared.add(idx);el('bossModal').classList.remove('show');el('portalModal').classList.remove('show');el('factorBookModal').classList.remove('show');el('pause').disabled=true;el('next').disabled=true;setControlsDisabled(true);updateScoreboard();if(won){setText('victoryScore',score);setText('victoryStats',`Misi: 5/5 • Jawapan betul: ${correctCount} • Jawapan salah: ${wrongCount} • Haiwan ditewaskan: ${enemiesDefeated} • Nyawa tambahan: ${bonusLivesCollected} • Ketepatan: ${accuracy()} • Rekod terbaik: ${bestScore}`);el('gameover').classList.remove('show');el('victory').classList.add('show');say('TAHNIAH, ANDA BERJAYA MENAMATKAN SEMUA 5 MISI FAKTOR SEPUNYA!');sound('win')}else{setText('finalScore',score);setText('finalStats',`Level: ${idx+1}/5 • Jawapan betul: ${correctCount} • Jawapan salah: ${wrongCount} • Haiwan ditewaskan: ${enemiesDefeated} • Nyawa tambahan: ${bonusLivesCollected} • Ketepatan: ${accuracy()}`);el('victory').classList.remove('show');el('gameover').classList.add('show');say('GAME OVER, NYAWA ANDA TELAH HABIS, SILA CUBA SEMULA!');sound('over')}draw()}
+function drawHero(g){const x=player.x,y=player.y,shielded=Date.now()<freezeUntil,blink=Date.now()<invulnerableUntil&&Math.floor(Date.now()/100)%2===0;if(blink&&!shielded)return;g.save();g.translate(x+player.w/2,y+player.h/2);if(player.facing<0)g.scale(-1,1);const bob=player.onGround&&Math.abs(player.vx)>.1?Math.sin(Date.now()/55)*1.6:0;g.translate(0,bob);if(shielded){g.save();g.strokeStyle='#83f1ff';g.lineWidth=3;g.shadowColor='#51dfff';g.shadowBlur=18;g.fillStyle='rgba(103,229,255,.17)';g.beginPath();g.ellipse(0,-1,25,31,0,0,Math.PI*2);g.fill();g.stroke();g.restore();}
+ // Backpack
+ g.fillStyle='#143d60';g.strokeStyle='#102844';g.lineWidth=2;g.beginPath();g.roundRect(-16,-6,11,20,4);g.fill();g.stroke();g.fillStyle='#f0b72d';g.fillRect(-14,-1,7,8);
+ // boots and trousers
+ g.fillStyle='#17304e';g.beginPath();g.roundRect(-10,12,8,10,2);g.roundRect(3,12,8,10,2);g.fill();g.fillStyle='#ffcf47';g.beginPath();g.roundRect(-12,18,11,5,2);g.roundRect(2,18,11,5,2);g.fill();
+ // jacket gradient
+ const jacket=g.createLinearGradient(-12,-3,12,12);jacket.addColorStop(0,'#4ed0ff');jacket.addColorStop(1,'#1764ad');g.fillStyle=jacket;g.strokeStyle='#102844';g.lineWidth=2;g.beginPath();g.roundRect(-12,-5,24,22,6);g.fill();g.stroke();
+ g.fillStyle='#ffcf9c';g.beginPath();g.roundRect(-15,-1,6,13,3);g.roundRect(9,-1,6,13,3);g.fill();g.fillStyle='#e9b72d';g.beginPath();g.arc(-12,12,4,0,Math.PI*2);g.arc(12,12,4,0,Math.PI*2);g.fill();
+ g.fillStyle='#e6a875';g.fillRect(-4,-9,8,7);g.fillStyle='#ffcf9c';g.strokeStyle='#102844';g.beginPath();g.roundRect(-10,-23,20,18,6);g.fill();g.stroke();g.fillStyle='#563522';g.beginPath();g.arc(-4,-22,7,Math.PI,Math.PI*1.9);g.fill();g.fillRect(-10,-23,5,7);
+ g.fillStyle='#f2bd32';g.beginPath();g.roundRect(-12,-28,24,7,3);g.fill();g.strokeStyle='#102844';g.stroke();g.fillStyle='#d9901b';g.fillRect(-4,-26,8,3);g.fillStyle='#17304e';g.fillRect(1,-17,2,3);g.fillRect(7,-17,2,3);g.strokeStyle='#884b33';g.lineWidth=1.5;g.beginPath();g.arc(4,-13,4,.15,Math.PI-.15);g.stroke();
+ g.fillStyle='#ef5350';g.beginPath();g.moveTo(-10,-7);g.lineTo(9,-7);g.lineTo(5,-2);g.lineTo(-8,-2);g.closePath();g.fill();g.beginPath();g.moveTo(5,-3);g.lineTo(12,4);g.lineTo(8,7);g.lineTo(2,0);g.closePath();g.fill();g.fillStyle='#ffdf61';g.beginPath();g.arc(-1,5,3,0,Math.PI*2);g.fill();g.fillStyle='#17304e';g.beginPath();g.moveTo(-1,2);g.lineTo(1,5);g.lineTo(-2,8);g.closePath();g.fill();g.restore()}
+function drawEnemy(g,e){const bob=Math.sin(Date.now()/110+e.phase)*2;g.save();g.translate(e.x,e.y+bob);g.fillStyle='rgba(24,27,56,.22)';g.beginPath();g.ellipse(e.w/2,e.h+2,e.w*.46,4,0,0,Math.PI*2);g.fill();
+ if(e.kind==='slime'){g.fillStyle='#62d45b';g.strokeStyle='#276f3f';g.lineWidth=2;g.beginPath();g.moveTo(3,25);g.quadraticCurveTo(0,8,10,7);g.quadraticCurveTo(19,-1,28,7);g.quadraticCurveTo(40,8,37,25);g.quadraticCurveTo(20,33,3,25);g.fill();g.stroke();g.fillStyle='#fff';g.beginPath();g.ellipse(14,16,5,6,0,0,Math.PI*2);g.ellipse(27,16,5,6,0,0,Math.PI*2);g.fill();g.fillStyle='#172746';g.beginPath();g.arc(15,17,2,0,Math.PI*2);g.arc(27,17,2,0,Math.PI*2);g.fill();}
+ else if(e.kind==='beetle'){g.fillStyle='#287ea5';g.strokeStyle='#12445f';g.lineWidth=2;g.beginPath();g.ellipse(20,18,18,13,0,0,Math.PI*2);g.fill();g.stroke();g.strokeStyle='#83e4ff';g.beginPath();g.arc(20,18,12,.1,Math.PI-.1);g.stroke();g.fillStyle='#fff';g.beginPath();g.arc(13,12,4,0,Math.PI*2);g.arc(26,12,4,0,Math.PI*2);g.fill();g.fillStyle='#162e4b';g.beginPath();g.arc(14,13,2,0,Math.PI*2);g.arc(27,13,2,0,Math.PI*2);g.fill();g.strokeStyle='#12445f';for(const x of [8,16,24,32]){g.beginPath();g.moveTo(x,25);g.lineTo(x-3,30);g.stroke()}}
+ else if(e.kind==='fox'){g.fillStyle='#e77937';g.strokeStyle='#78351f';g.lineWidth=2;g.beginPath();g.moveTo(3,24);g.lineTo(0,13);g.lineTo(8,15);g.lineTo(12,7);g.lineTo(27,7);g.lineTo(35,15);g.lineTo(39,25);g.quadraticCurveTo(20,34,3,24);g.fill();g.stroke();g.fillStyle='#fff1d8';g.beginPath();g.ellipse(22,22,10,5,0,0,Math.PI*2);g.fill();g.fillStyle='#fff';g.beginPath();g.arc(15,14,4,0,Math.PI*2);g.arc(27,14,4,0,Math.PI*2);g.fill();g.fillStyle='#172746';g.beginPath();g.arc(16,15,2,0,Math.PI*2);g.arc(28,15,2,0,Math.PI*2);g.fill();g.fillStyle='#f9f4ed';g.beginPath();g.moveTo(5,22);g.lineTo(0,17);g.lineTo(8,19);g.closePath();g.fill()}
+ else if(e.kind==='crab'){g.fillStyle='#f05d57';g.strokeStyle='#872f46';g.lineWidth=2;g.beginPath();g.ellipse(20,20,17,10,0,0,Math.PI*2);g.fill();g.stroke();g.strokeStyle='#872f46';for(const x of [8,15,25,32]){g.beginPath();g.moveTo(x,25);g.lineTo(x-3,30);g.stroke()}g.beginPath();g.moveTo(7,14);g.lineTo(3,5);g.lineTo(0,8);g.moveTo(33,14);g.lineTo(37,5);g.lineTo(40,8);g.stroke();g.fillStyle='#fff';g.beginPath();g.arc(14,15,4,0,Math.PI*2);g.arc(26,15,4,0,Math.PI*2);g.fill();g.fillStyle='#172746';g.beginPath();g.arc(15,16,2,0,Math.PI*2);g.arc(27,16,2,0,Math.PI*2);g.fill()}
+ else{g.fillStyle='#aa7853';g.strokeStyle='#684529';g.lineWidth=2;g.beginPath();g.ellipse(20,20,17,11,0,0,Math.PI*2);g.fill();g.stroke();g.fillStyle='#ead1a2';for(const x of [7,13,19,25,31]){g.beginPath();g.moveTo(x,12);g.lineTo(x+3,4);g.lineTo(x+5,13);g.closePath();g.fill()}g.fillStyle='#fff';g.beginPath();g.arc(14,17,4,0,Math.PI*2);g.arc(26,17,4,0,Math.PI*2);g.fill();g.fillStyle='#172746';g.beginPath();g.arc(15,18,2,0,Math.PI*2);g.arc(27,18,2,0,Math.PI*2);g.fill()}
+ g.restore()}
+function drawHeartPickup(g,x,y){
+ const pulse=1+Math.sin(Date.now()/135)*.08;
+ g.save();g.translate(x,y);g.scale(pulse,pulse);
+ g.shadowColor='#ff1e70';g.shadowBlur=20;g.fillStyle='rgba(255,91,155,.22)';g.beginPath();g.arc(0,0,25,0,Math.PI*2);g.fill();
+ g.shadowBlur=0;g.strokeStyle='#fff4fb';g.lineWidth=3;g.beginPath();g.arc(0,0,22,0,Math.PI*2);g.stroke();
+ g.shadowColor='#e62e63';g.shadowBlur=15;g.fillStyle='#ff3f7b';g.strokeStyle='#8f103f';g.lineWidth=2.5;g.beginPath();g.moveTo(0,15);g.bezierCurveTo(-6,9,-19,1,-16,-8);g.bezierCurveTo(-13,-18,-3,-17,0,-8);g.bezierCurveTo(5,-19,17,-17,16,-7);g.bezierCurveTo(17,2,7,10,0,15);g.closePath();g.fill();g.stroke();g.shadowBlur=0;
+ g.fillStyle='rgba(255,255,255,.92)';g.beginPath();g.ellipse(-6,-8,3.5,4.5,-.5,0,Math.PI*2);g.fill();g.restore();
+}
+function drawFinalBoss(g,boss){const bob=Math.sin(Date.now()/230)*2;g.save();g.translate(boss.x,boss.y+bob);g.fillStyle='rgba(35,22,60,.25)';g.beginPath();g.ellipse(boss.w/2,boss.h+1,42,7,0,0,Math.PI*2);g.fill();g.fillStyle='#302047';g.fillRect(12,72,20,18);g.fillRect(49,72,20,18);g.fillStyle='#f2bd32';g.fillRect(9,85,26,6);g.fillRect(46,85,26,6);g.fillStyle='#58318a';g.strokeStyle='#2d1b48';g.lineWidth=4;g.beginPath();g.roundRect(7,29,68,49,12);g.fill();g.stroke();g.fillStyle='#8557bd';g.beginPath();g.roundRect(14,7,56,39,12);g.fill();g.stroke();g.fillStyle='#e9b83e';g.beginPath();g.moveTo(16,17);g.lineTo(4,1);g.lineTo(24,9);g.closePath();g.fill();g.stroke();g.beginPath();g.moveTo(66,17);g.lineTo(78,1);g.lineTo(58,9);g.closePath();g.fill();g.stroke();g.fillStyle='#ffcf47';g.beginPath();g.moveTo(25,8);g.lineTo(31,-2);g.lineTo(39,8);g.lineTo(47,-2);g.lineTo(55,8);g.closePath();g.fill();g.stroke();g.fillStyle='#2a183f';g.fillRect(20,21,18,9);g.fillRect(46,21,18,9);g.fillStyle='#ff5a5a';g.fillRect(25,23,7,5);g.fillRect(51,23,7,5);g.fillStyle='#fff';g.fillRect(26,23,2,2);g.fillRect(52,23,2,2);g.fillStyle='#29143f';g.beginPath();g.roundRect(25,32,34,9,3);g.fill();g.fillStyle='#fff4df';g.beginPath();g.moveTo(29,32);g.lineTo(35,32);g.lineTo(32,37);g.closePath();g.fill();g.beginPath();g.moveTo(47,32);g.lineTo(53,32);g.lineTo(50,37);g.closePath();g.fill();g.fillStyle='#423064';g.beginPath();g.arc(8,42,12,0,Math.PI*2);g.arc(74,42,12,0,Math.PI*2);g.fill();g.fillStyle='#8557bd';g.beginPath();g.roundRect(0,44,14,15,5);g.roundRect(68,44,14,15,5);g.fill();g.fillStyle='#ffd43b';g.beginPath();g.moveTo(41,48);g.lineTo(50,57);g.lineTo(41,66);g.lineTo(32,57);g.closePath();g.fill();g.strokeStyle='#fff1a5';g.lineWidth=2;g.stroke();g.fillStyle='rgba(35,22,60,.9)';g.beginPath();g.roundRect(-6,-29,94,20,7);g.fill();g.fillStyle='#fff';g.font='bold 11px system-ui';g.textAlign='center';g.fillText('RAJA FAKTOR',boss.w/2,-16);for(let i=0;i<3;i++){g.fillStyle=i<bossHealth?'#ff4d5b':'#736a80';g.fillRect(18+i*15,-6,12,6)}g.restore()}
+function drawBackground(g,theme){const sky=g.createLinearGradient(0,0,0,440);sky.addColorStop(0,theme.sky1);sky.addColorStop(1,theme.sky2);g.fillStyle=sky;g.fillRect(0,0,960,440);g.globalAlpha=.5;g.fillStyle='#fff';for(let i=0;i<5;i++){const x=((120+i*205-camera*.12)%1120+1120)%1120,y=55+(i%3)*32;g.beginPath();g.arc(x,y,17,0,Math.PI*2);g.arc(x+22,y-8,23,0,Math.PI*2);g.arc(x+46,y,16,0,Math.PI*2);g.fill()}g.globalAlpha=1;
+ // Lapisan gunung jauh berparalaks.
+ for(let layer=0;layer<2;layer++){g.fillStyle=layer===0?theme.hill2:theme.hill;g.beginPath();g.moveTo(0,370+layer*18);for(let i=0;i<=8;i++){const x=i*150-((camera*(layer?.19:.09))%150);g.quadraticCurveTo(x+35,245+layer*27+(i%2)*26,x+150,370+layer*18)}g.lineTo(960,440);g.lineTo(0,440);g.closePath();g.fill()}
+ // Hiasan dunia di kejauhan: pokok, kristal gua, kaktus, awan dan menara istana.
+ for(let i=0;i<10;i++){const x=((i*135-camera*.24)%1250+1250)%1250;const y=294+(i%3)*16;if(idx===0){g.fillStyle='#845638';g.fillRect(x+15,y,9,54);g.fillStyle='#328f5c';g.beginPath();g.arc(x+18,y-7,25,0,Math.PI*2);g.arc(x+1,y+3,17,0,Math.PI*2);g.arc(x+35,y+4,17,0,Math.PI*2);g.fill()}else if(idx===1){g.fillStyle='#b8b7ff';g.beginPath();g.moveTo(x+18,y-42);g.lineTo(x+34,y+4);g.lineTo(x+18,y+23);g.lineTo(x+3,y+4);g.closePath();g.fill()}else if(idx===2){g.fillStyle='#277953';g.fillRect(x+16,y-12,8,58);g.fillRect(x+5,y+4,12,8);g.fillRect(x+5,y-4,7,18);g.fillRect(x+23,y+13,12,8);g.fillRect(x+28,y+4,7,19)}else if(idx===3){g.fillStyle='rgba(255,255,255,.7)';g.beginPath();g.ellipse(x+20,y+10,41,18,0,0,Math.PI*2);g.fill()}else{g.fillStyle='#62508f';g.fillRect(x+7,y-31,26,67);g.fillStyle='#45346f';g.beginPath();g.moveTo(x+3,y-31);g.lineTo(x+20,y-57);g.lineTo(x+37,y-31);g.closePath();g.fill();g.fillStyle='#ffd875';g.fillRect(x+16,y-11,7,15)}}
+}
+function draw(){const g=ctx,theme=levels[idx].theme;g.clearRect(0,0,canvas.width,canvas.height);drawBackground(g,theme);g.save();g.translate(-camera,0);
+ // Bayang jurang: kawasan gelap jelas menunjukkan ruang kosong yang boleh menjatuhkan watak.
+ for(let i=0;i<floorSegments.length-1;i++){const a=floorSegments[i],b=floorSegments[i+1],x=a.x+a.w,w=b.x-x,y=Math.min(a.y,b.y)+4;const pit=g.createLinearGradient(0,y,0,440);pit.addColorStop(0,theme.pit);pit.addColorStop(1,'#11182e');g.fillStyle=pit;g.fillRect(x,y,w,440-y);g.fillStyle='rgba(20,15,50,.45)';g.beginPath();g.moveTo(x,y);g.lineTo(x+Math.min(26,w*.3),y+25);g.lineTo(x+Math.min(42,w*.45),440);g.lineTo(x,440);g.closePath();g.fill();g.fillStyle='rgba(255,255,255,.12)';g.fillRect(x+5,y+13,Math.max(0,w-10),2)}
+ // Platform utama dengan sisi batu dan rumput/permata di bahagian atas.
+ platforms.forEach(p=>{g.fillStyle=p.kind==='ground'?theme.side:'#4b386e';g.beginPath();g.roundRect(p.x,p.y,p.w,p.h,p.kind==='ground'?[5,5,0,0]:[8,8,4,4]);g.fill();g.fillStyle=p.kind==='ground'?theme.top:theme.ledge;g.beginPath();g.roundRect(p.x,p.y,p.w,11,p.kind==='ground'?[5,5,1,1]:[8,8,3,3]);g.fill();g.fillStyle=p.kind==='ground'?theme.detail:theme.ledgeTop;for(let xx=p.x+9;xx<p.x+p.w-5;xx+=34){g.fillRect(xx,p.y+2,13,4)}if(p.kind==='ground'){g.fillStyle='rgba(48,35,46,.23)';for(let xx=p.x+15;xx<p.x+p.w;xx+=52){g.fillRect(xx,p.y+20,22,3);g.fillRect(xx+9,p.y+31,12,3)}}else{g.fillStyle='rgba(255,255,255,.35)';g.fillRect(p.x+10,p.y+14,Math.max(0,p.w-20),2)}});
+ // Bendera checkpoint berdiri di platform sebenar.
+ checkpointSpecs.forEach((cp,i)=>{g.fillStyle='#704a32';g.fillRect(cp.x,cp.groundY-40,5,40);g.fillStyle=activatedCheckpoints.has(i)?'#ffe15b':'#ff875f';g.beginPath();g.moveTo(cp.x+5,cp.groundY-39);g.lineTo(cp.x+34,cp.groundY-30);g.lineTo(cp.x+5,cp.groundY-18);g.closePath();g.fill();g.fillStyle='#fff';g.font='bold 10px system-ui';g.textAlign='left';g.fillText(activatedCheckpoints.has(i)?'SIMPAN':cp.label,cp.x-4,cp.groundY-46);if(activatedCheckpoints.has(i)){g.strokeStyle='#ffe77d';g.lineWidth=2;g.beginPath();g.arc(cp.x+14,cp.groundY-29,23,0,Math.PI*2);g.stroke()}});
+ // Duri berbahaya berada di atas permukaan platform.
+ spikeSpecs.forEach(s=>{g.fillStyle='#ef5350';g.strokeStyle='#7f1d36';g.lineWidth=2;for(let x=s.x;x<s.x+s.w;x+=14){g.beginPath();g.moveTo(x,s.baseY);g.lineTo(x+7,s.baseY-23);g.lineTo(x+14,s.baseY);g.closePath();g.fill();g.stroke()}g.fillStyle='#6d2a42';g.fillRect(s.x,s.baseY-2,s.w,4)});
+ if(Date.now()<freezeUntil){g.save();g.globalAlpha=.55;g.fillStyle='#9de8ff';g.fillRect(camera,0,960,440);g.restore()}enemies.forEach(e=>{if(!e.dead)drawEnemy(g,e)});
+ // Kristal hati ialah ganjaran tambahan, bukan petunjuk jawapan Matematik.
+ heartPickups.forEach(h=>{if(h.collected)return;const bob=Math.sin(Date.now()/180+h.phase)*4;drawHeartPickup(g,h.x,h.y+bob);if(Date.now()<(h.labelUntil||0)){g.save();g.font='bold 13px system-ui';g.textAlign='center';g.lineWidth=3;g.strokeStyle='rgba(71,16,51,.8)';g.fillStyle='#fff4fb';g.strokeText('NYAWA +1 • KUTIP',h.x,h.y+bob-31);g.fillText('NYAWA +1 • KUTIP',h.x,h.y+bob-31);g.restore()}});
+ // Semua kristal kekal sama warna dan bentuk, tidak membocorkan jawapan.
+ items.forEach(item=>{if(item.collected)return;const bob=Math.sin(Date.now()/170+item.x*.02)*2;g.save();g.translate(item.x,item.y+bob);g.shadowColor='#0b5d31';g.shadowBlur=13;g.fillStyle='#16a34a';g.beginPath();g.moveTo(0,-22);g.lineTo(22,0);g.lineTo(0,22);g.lineTo(-22,0);g.closePath();g.fill();g.shadowBlur=0;g.lineWidth=4;g.strokeStyle='#dcffe0';g.stroke();g.fillStyle='#14334d';g.font='bold 19px system-ui';g.textAlign='center';g.textBaseline='middle';g.fillText(String(item.n),0,1);g.restore()});
+ if(idx===rounds.length-1){g.save();g.strokeStyle=portalUnlocked?'#ffe27a':'#b78cff';g.lineWidth=5;g.shadowColor='#ac80ff';g.shadowBlur=portalUnlocked?18:9;g.beginPath();g.ellipse(finalBoss.x+finalBoss.w/2,finalBoss.y+finalBoss.h-4,62,48,0,0,Math.PI*2);g.stroke();g.shadowBlur=0;g.fillStyle='#fff';g.font='bold 12px system-ui';g.textAlign='center';g.fillText(portalUnlocked?'PORTAL DIBUKA':'PORTAL ISTANA',finalBoss.x+finalBoss.w/2,finalBoss.y+finalBoss.h+22);g.restore();drawFinalBoss(g,finalBoss)}else{const endSeg=floorSegments[floorSegments.length-1],door={x:worldW-75,y:endSeg.y-70,w:42,h:70};g.fillStyle='#6b3d28';g.beginPath();g.roundRect(door.x,door.y,door.w,door.h,8);g.fill();g.fillStyle=complete?theme.accent:'#9daec3';g.beginPath();g.roundRect(door.x+6,door.y+7,door.w-12,door.h-9,6);g.fill();g.fillStyle='#553321';g.beginPath();g.arc(door.x+door.w/2,door.y+13,9,Math.PI,0);g.fill();g.fillStyle='#f5bb28';g.beginPath();g.arc(door.x+door.w-12,door.y+39,3,0,Math.PI*2);g.fill();if(complete){g.strokeStyle=theme.accent;g.lineWidth=3;g.beginPath();g.arc(door.x+door.w/2,door.y+31,31,0,Math.PI*2);g.stroke()}if(portalUnlocked){const cx=door.x-27,cy=door.y+43;g.fillStyle='#8c4c20';g.fillRect(cx,cy,25,18);g.fillStyle='#f5b92e';g.fillRect(cx-2,cy-5,29,8);g.fillStyle='#ffdf64';g.fillRect(cx+7,cy+3,10,8);g.fillStyle='#fff4b0';g.fillRect(cx+10,cy+5,4,4)}}
+ drawHero(g);g.restore();
+ // HUD dalam canvas
+ g.fillStyle='rgba(17,34,68,.78)';g.beginPath();g.roundRect(12,12,300,38,12);g.fill();g.fillStyle='#fff';g.font='bold 14px system-ui';g.textAlign='left';g.fillText(`${idx+1}/5  ${levels[idx].title}`,24,36);
+ if(paused){g.fillStyle='rgba(10,23,48,.65)';g.fillRect(0,0,960,440);g.fillStyle='#fff';g.textAlign='center';g.font='bold 38px system-ui';g.fillText('PERMAINAN DIJEDA',480,205);g.font='bold 18px system-ui';g.fillText('Tekan Sambung untuk terus bermain',480,240)}else if(!running&&!endState){g.fillStyle='rgba(10,23,48,.18)';g.fillRect(0,0,960,440);g.fillStyle='#fff';g.textAlign='center';g.font='bold 32px system-ui';g.shadowColor='#16264a';g.shadowBlur=6;g.fillText(complete?'LEVEL SELESAI!':`DUNIA ${idx+1}`,480,190);g.shadowBlur=0;g.font='bold 18px system-ui';g.fillText(complete?'Teruskan ke pintu emas!':'Tekan Mula untuk memulakan pengembaraan',480,225)}
+}
+// Menu utama berada di penjuru kanan atas; ia menjeda permainan dan boleh ditutup untuk menyambung semula.
+el('menuToggle').addEventListener('click',openMenu);
+el('closeMenu').addEventListener('click',closeMenu);
+el('menuModal').addEventListener('click',e=>{if(e.target===el('menuModal'))closeMenu()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(el('menuModal').classList.contains('show'))closeMenu();else if(el('factorBookModal').classList.contains('show'))closeFactorBook()}});
+// Butang dan input.
+el('start').addEventListener('click',start);el('reset').addEventListener('click',reset);el('restartGame').addEventListener('click',reset);el('restartWin').addEventListener('click',reset);el('pause').addEventListener('click',togglePause);el('power').addEventListener('click',useFreezePower);el('factorBook').addEventListener('click',openFactorBook);el('closeFactorBook').addEventListener('click',closeFactorBook);
+el('sound').addEventListener('click',()=>{soundOn=!soundOn;setText('sound',soundOn?'🔊 Kesan bunyi: ON':'🔇 Kesan bunyi: OFF');if(soundOn)sound('click')});
+el('music').addEventListener('click',()=>{musicOn=!musicOn;setText('music',musicOn?'🎵 Muzik: ON':'🔇 Muzik: OFF');if(musicOn){ensureAudio();startMusic();sound('click')}else stopMusic()});
+el('next').addEventListener('click',()=>{if(endState||!complete||idx>=rounds.length-1)return;idx++;running=false;paused=false;setup();running=true;el('start').disabled=true;el('pause').disabled=false;updatePauseButton();say(`Level ${idx+1}: ${levels[idx].title}. ${levels[idx].difficulty}. Cari semua faktor sepunya!`);sound('door');startMusic();requestAnimationFrame(loop)});
+function bindHold(id,key){const b=el(id);b.addEventListener('pointerdown',e=>{e.preventDefault();if(running&&!endState&&!paused){try{b.setPointerCapture(e.pointerId)}catch(err){}keys[key]=true}});['pointerup','pointercancel','lostpointercapture'].forEach(t=>b.addEventListener(t,()=>keys[key]=false))}
+bindHold('left','left');bindHold('right','right');el('jump').addEventListener('pointerdown',e=>{e.preventDefault();jump()});
+document.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','ArrowUp',' '].includes(e.key))e.preventDefault();if(endState)return;if(e.key==='ArrowLeft')keys.left=true;if(e.key==='ArrowRight')keys.right=true;if(e.key==='ArrowUp'||e.key===' ')jump();if(e.key.toLowerCase()==='p')togglePause();if(e.key.toLowerCase()==='f')useFreezePower()});
+document.addEventListener('keyup',e=>{if(e.key==='ArrowLeft')keys.left=false;if(e.key==='ArrowRight')keys.right=false});
+randomizeRounds();
+setup();
+
+</script>
+</body>
+</html>
